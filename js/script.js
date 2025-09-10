@@ -75,5 +75,3 @@ function iniciarSimuladorJuegos() {
 
     alert("Gracias por visitar la Ludoteca Digital. ¡Hasta la proxima!");
 }
-
-iniciarSimuladorJuegos();
