@@ -1,78 +1,90 @@
-const juegos = [
+const juegosIniciales = [
     { nombre: "Half-Life 1", genero: "FPS", disponible: true },
     { nombre: "Halo: Combat Evolved", genero: "FPS", disponible: true },
-    { nombre: "Counter-Strike 1.6", genero: "FPS Tactico", disponible: false },
-    { nombre: "Grand Theft Auto III", genero: "Accion-Aventura", disponible: true }
+    { nombre: "Counter-Strike 1.6", genero: "FPS Tactico", disponible: true },
+    { nombre: "Grand Theft Auto III", genero: "Accion-Aventura", disponible: true },
+    { nombre: "Doom (1993)", genero: "FPS", disponible: true },
+    { nombre: "The Legend of Zelda: Ocarina of Time", genero: "Aventura", disponible: true },
+    { nombre: "StarCraft", genero: "Estrategia", disponible: true },
+    { nombre: "Tetris", genero: "Puzzles", disponible: true }
 ];
 
-function buscarJuegoPorNombre(nombre) {
-    for (let i = 0; i < juegos.length; i++) {
-        if (juegos[i].nombre.toLowerCase() === nombre.toLowerCase()) {
-            return juegos[i];
-        }
-    }
-    return null;
-}
-
-function mostrarJuegosDisponibles() {
-    console.log("--- Juegos Disponibles en la Ludoteca ---");
-    let hayDisponibles = false;
-    for (const juego of juegos) {
-        if (juego.disponible) {
-            console.log(`- Titulo: ${juego.nombre}, Genero: ${juego.genero}`);
-            hayDisponibles = true;
-        }
-    }
-    if (!hayDisponibles) {
-        console.log("No hay juegos disponibles en este momento.");
-    }
-    console.log("---------------------------------------");
-}
-
-function jugarJuego() {
-    const nombreJuego = prompt("Ingresa el nombre del juego que quieres iniciar:");
-
-    if (nombreJuego) {
-        const juego = buscarJuegoPorNombre(nombreJuego);
-
-        if (juego) {
-            if (juego.disponible) {
-                juego.disponible = false;
-                alert(`Iniciando ${juego.nombre}! Que te diviertas.`);
-                console.log(`SESION INICIADA: "${juego.nombre}" ahora esta en uso.`);
-            } else {
-                alert(`Lo sentimos, "${juego.nombre}" ya esta siendo jugado por otra persona.`);
-            }
-        } else {
-            alert("El juego que buscas no se encuentra en nuestra ludoteca.");
-        }
+function obtenerJuegos() {
+    const juegosEnStorage = localStorage.getItem('juegos');
+    if (!juegosEnStorage || JSON.parse(juegosEnStorage).length < juegosIniciales.length) {
+        localStorage.setItem('juegos', JSON.stringify(juegosIniciales));
+        return juegosIniciales;
     } else {
-        alert("No ingresaste ningun nombre. Operacion cancelada.");
+        return JSON.parse(juegosEnStorage);
     }
 }
 
-function iniciarSimuladorJuegos() {
-    let continuar = true;
-
-    while (continuar) {
-        const opcion = prompt(
-            "Bienvenido a la Ludoteca Digital. Elige una opcion:\n" +
-            "1. Ver juegos disponibles\n" +
-            "2. Jugar un juego\n" +
-            "3. Salir"
-        );
-
-        if (opcion === "1") {
-            mostrarJuegosDisponibles();
-        } else if (opcion === "2") {
-            jugarJuego();
-        } else if (opcion === "3") {
-            continuar = false;
-        } else {
-            alert("Opcion no valida. Por favor, elige 1, 2 o 3.");
+const juegos = obtenerJuegos();
+const ludotecaDiv = document.getElementById('ludoteca');
+const juegoForm = document.getElementById('juego-form');
+const juegoSelect = document.getElementById('juego-select');
+const mensajeDiv = document.getElementById('mensaje');
+function renderizarJuegos() {
+    ludotecaDiv.innerHTML = ''; 
+    juegos.forEach(juego => {
+        const juegoParrafo = document.createElement('p'); 
+        juegoParrafo.textContent = `Titulo: ${juego.nombre}, Genero: ${juego.genero}, Estado: ${juego.disponible ? 'Disponible' : 'En uso'}`;
+        
+        if (!juego.disponible) {
+            juegoParrafo.style.color = 'red';
         }
+        ludotecaDiv.appendChild(juegoParrafo);
+    });
+}
+
+function popularSelect() {
+    juegoSelect.innerHTML = ''; 
+    juegos.forEach(juego => {
+        const option = document.createElement('option');
+        option.value = juego.nombre;
+        option.textContent = juego.nombre;
+        juegoSelect.appendChild(option);
+    });
+}
+
+function jugarJuego(nombreJuego) {
+    const juegoSeleccionado = juegos.find(j => j.nombre.toLowerCase() === nombreJuego.toLowerCase());
+    if (!juegoSeleccionado) {
+        mensajeDiv.textContent = 'El juego seleccionado no existe.';
+        mensajeDiv.style.color = 'red';
+        return;
     }
 
-    alert("Gracias por visitar la Ludoteca Digital. ¡Hasta la proxima!");
+    if (juegoSeleccionado.disponible) {
+        juegos.forEach(j => {
+            if (j !== juegoSeleccionado) {
+                j.disponible = true;
+            }
+        });
+
+        juegoSeleccionado.disponible = false;
+        mensajeDiv.textContent = `Iniciando ${juegoSeleccionado.nombre}! Que te diviertas.`;
+        mensajeDiv.style.color = 'green';
+
+    } else {
+        juegoSeleccionado.disponible = true;
+        mensajeDiv.textContent = `Has terminado tu sesion de "${juegoSeleccionado.nombre}". Juego liberado.`;
+        mensajeDiv.style.color = 'blue';
+    }
+
+    localStorage.setItem('juegos', JSON.stringify(juegos));
+    renderizarJuegos();
 }
-iniciarSimuladorJuegos();
+
+juegoForm.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+    
+    const juegoSeleccionado = juegoSelect.value;
+    
+    jugarJuego(juegoSeleccionado);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderizarJuegos();
+    popularSelect();
+});

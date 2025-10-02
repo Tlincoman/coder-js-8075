@@ -3,12 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador</title>
+    <title>Videojuegos</title>
+    <link rel="stylesheet" href="./css/estilo.css">
     <script src="script.js" defer ></script>
 </head>
 <body>
-    <main>
-        <h1>biblioteca de juegos</h1>
-        <p>el simulador hace una lista de los juegos, jugar y salir</p>
+<main>
+    <section>
+        <h1>Ludoteca Digital</h1>
+        <p>Selecciona un juego de la lista para comenzar una sesion.</p>
+    </section>
+
+    <section>
+        <h2>Jugar un Juego</h2>
+        <form id="juego-form">
+            <label for="juego-select">Elige un juego:</label>
+            <select name="juegos" id="juego-select">
+                </select>
+            <button type="submit">Jugar</button>
+        </form>
+        <div id="mensaje"></div>
+    </section>
+
+    <section>
+        <h2>Estado de la Ludoteca</h2>
+        <div id="ludoteca"></div>
+    </section>
+</main>
+<footer>
+    <ul>
+        <li>
+            <a href="mailto:info@videojuegos.com" target="_blank" rel="noreferrer noopener">info@videojuegos.com</a>
+        </li>
+    </ul>
+</footer>
 </body>
 </html>
