@@ -1,48 +1,235 @@
 body {
-  background-color: black;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
+  background-color: #1a1a1a;
+  color: white;
+  font-family: "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+main {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 p {
-  color: white;
-  font-family: "Orbitron", sans-serif;
-  font-size: 1.5em;
+  color: #ccc;
+  font-size: 1em;
   text-align: left;
-  margin: 1em;
+  margin: 1em 0;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
-h1, h2 {
-  color: white;
+h1, h2, h3 {
+  color: #00e676; /* Verde neón */
   font-family: "Orbitron", sans-serif;
-  margin: 1em;
+  margin: 1em 0;
+  text-align: center;
 }
 
-ul {
-  color: #005F73;
-  list-style-type: none;
-  padding-left: 1em;
-  margin: 1em;
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  color: #777;
 }
 
-/* mobile */
-@media (max-width: 480px) {
-  body {
-    background-color: black;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-    overflow-x: hidden;
-  }
+footer ul {
+  padding: 0;
+  margin: 0;
+}
 
-  p, h1, h2, ul {
-    font-size: 1em;
-    margin: 0.5em;
-    padding: 0;
-  }
+footer li {
+  display: inline;
+}
+
+footer a {
+  color: #777;
+  text-decoration: none;
+}
+
+/* --------------------------------- */
+/* Estilos de la Tienda y Tarjetas */
+/* --------------------------------- */
+
+.game-grid {
+    display: grid;
+    /* Cuadrícula de 3 columnas en pantallas grandes */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.game-card {
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0, 230, 118, 0.3); /* Sombra con color neón */
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.game-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    margin: 5px 0;
+}
+
+.game-genre {
+    color: #00e676;
+    font-size: 0.85em;
+    margin-bottom: 10px;
+}
+
+/* Precios */
+.price-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.discount-tag {
+    background-color: #e53935; /* Rojo de descuento */
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #777;
+    margin-right: 10px;
+}
+
+.final-price {
+    color: #00e676; /* Precio final en neón */
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+/* Botones */
+.buy-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.buy-btn, .wishlist-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.buy-btn {
+    flex-grow: 1;
+    background-color: #00e676;
+    color: #1a1a1a;
+}
+
+.buy-btn:hover:not(:disabled) {
+    background-color: #69f0ae;
+}
+
+.buy-btn:disabled {
+    background-color: #555;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.wishlist-btn {
+    background-color: #555;
+    color: white;
+    width: 30px; 
+    flex-shrink: 0;
+}
+
+/* --------------------------------- */
+/* Estilos para el Cartel de Compra (Modal) */
+/* --------------------------------- */
+
+#cartel-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+#cartel-contenido {
+    background-color: #1e1e1e; 
+    color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5); /* Borde luminoso */
+    max-width: 400px;
+    text-align: center;
+}
+
+#cartel-contenido h3 {
+    margin-top: 0;
+    color: #00e676; 
+}
+
+#cartel-contenido p {
+    font-size: 1.1em;
+    margin: 15px 0;
+}
+
+.cartel-acciones {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.cartel-acciones button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#btn-confirmar {
+    background-color: #00e676;
+    color: #1a1a1a;
+}
+
+#btn-cancelar {
+    background-color: #e53935;
+    color: white;
+}
+
+/* CLASE CRUCIAL: Usada por JS para ocultar el modal */
+.oculto {
+    display: none !important; 
 }

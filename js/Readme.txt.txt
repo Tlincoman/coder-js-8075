@@ -1,1 +1,1 @@
-no tendrá nada pero me dará una ayuda en crear una costrumbre
+Se creo un simulador de una tienda de videojuegos y el json fue creado

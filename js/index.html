@@ -3,39 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Videojuegos</title>
+    <title>Gamezone</title>
     <link rel="stylesheet" href="./css/estilo.css">
     <script src="script.js" defer ></script>
 </head>
 <body>
 <main>
     <section>
-        <h1>Ludoteca Digital</h1>
-        <p>Selecciona un juego de la lista para comenzar una sesion.</p>
+        <h1>Tienda Gamezone 🎮</h1>
+        <p>¡Bienvenido a Gamezone! Explora nuestros títulos y aprovecha las ofertas.</p>
+        <p id="saldo-actual" style="font-weight: bold;"></p>
     </section>
 
-    <section>
-        <h2>Jugar un Juego</h2>
-        <form id="juego-form">
-            <label for="juego-select">Elige un juego:</label>
-            <select name="juegos" id="juego-select">
-                </select>
-            <button type="submit">Jugar</button>
-        </form>
-        <div id="mensaje"></div>
-    </section>
+    <div id="mensaje"></div>
 
     <section>
-        <h2>Estado de la Ludoteca</h2>
-        <div id="ludoteca"></div>
+        <h2>Inventario de la Tienda</h2>
+        <div id="tienda" class="game-grid">
+            
+        </div>
     </section>
 </main>
 <footer>
     <ul>
         <li>
-            <a href="mailto:info@videojuegos.com" target="_blank" rel="noreferrer noopener">info@videojuegos.com</a>
+            <a href="mailto:info@videojuegos.com" target="_blank" rel="noreferrer noopener">contacto@Gamezone.com</a>
         </li>
     </ul>
 </footer>
+
+<div id="cartel-overlay" class="oculto">
+    <div id="cartel-contenido">
+        <h3>Confirmar Compra</h3>
+        <p id="info-juego-compra"></p>
+        <p id="info-saldo-actual"></p>
+        <div class="cartel-acciones">
+            <button id="btn-confirmar">Confirmar Compra</button>
+            <button id="btn-cancelar">Cancelar</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
