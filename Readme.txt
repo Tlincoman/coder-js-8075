@@ -1,0 +1,1 @@
+Se creo un simulador de una tienda de videojuegos y el json fue creado
